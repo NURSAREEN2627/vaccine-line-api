@@ -17,7 +17,7 @@ app.use(express.json());
 const TOKEN = process.env.LINE_TOKEN || "h2xP7qrpsi61rF8PsP9cXAD1IW4xPidRomIj3x4Jk0XyUiJ75t5pMz1mKA/0mjtOzRpfGzesWr5Gh+P0EAH6gTKJ+lhqyOIVGOgS+o9cY3QXBInmGRAOvjiift6fNcQ492IMKgv+vEpM8BqlcT8kVAdB04t89/1O/w1cDnyilFU=";
 const DB    = process.env.DB_URL || "https://vaccine-dashboard-bc687-default-rtdb.firebaseio.com";
 
-const MAX_NORMAL      = 5;
+const MAX_NORMAL      = 3; // ✅ ลดให้เท่ากับ MAX_STEP (รอบประเมินมีแค่ 3 รอบ ถ้าเดิม 5 จะปิดเคสอัตโนมัติไม่ได้เลย)
 const MAX_STEP        = 3;
 const REMINDER_DELAY  = parseInt(process.env.REMINDER_DELAY)  || 30 * 60 * 1000; // ✅ เตือนซ้ำทุก 30 นาที
 const MAX_REMIND_COUNT= parseInt(process.env.MAX_REMIND_COUNT) || 2;              // ✅ เตือนซ้ำสูงสุด 2 ครั้ง
