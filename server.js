@@ -18,7 +18,7 @@ const TOKEN = process.env.LINE_TOKEN || "h2xP7qrpsi61rF8PsP9cXAD1IW4xPidRomIj3x4
 const DB    = process.env.DB_URL || "https://vaccine-dashboard-bc687-default-rtdb.firebaseio.com";
 
 const MAX_NORMAL      = 5;
-const MAX_STEP        = 5;
+const MAX_STEP        = 3;
 const REMINDER_DELAY  = parseInt(process.env.REMINDER_DELAY)  || 30 * 60 * 1000; // ✅ เตือนซ้ำทุก 30 นาที
 const MAX_REMIND_COUNT= parseInt(process.env.MAX_REMIND_COUNT) || 2;              // ✅ เตือนซ้ำสูงสุด 2 ครั้ง
 const HOSPITAL_CONTACT_URL = process.env.HOSPITAL_CONTACT_URL || "https://vaxkolok-dhb.github.io/hospital-contact/";
@@ -31,12 +31,11 @@ function thaiTime() {
   return new Date().toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
 }
 
+// ✅ ลดรอบประเมินเหลือ 3 ครั้ง: 30 นาที / 3 วัน / 7 วัน
 const FOLLOW_DELAYS = {
   1: parseInt(process.env.DELAY_1) || 30 * 60 * 1000,
-  2: parseInt(process.env.DELAY_2) ||  6 * 60 * 60 * 1000,
-  3: parseInt(process.env.DELAY_3) || 24 * 60 * 60 * 1000,
-  4: parseInt(process.env.DELAY_4) ||  3 * 24 * 60 * 60 * 1000,
-  5: parseInt(process.env.DELAY_5) ||  7 * 24 * 60 * 60 * 1000,
+  2: parseInt(process.env.DELAY_2) ||  3 * 24 * 60 * 60 * 1000,
+  3: parseInt(process.env.DELAY_3) ||  7 * 24 * 60 * 60 * 1000,
 };
 
 function getNextFollowTime(step) {
@@ -213,10 +212,8 @@ function buildCareAdvice(symptom) {
 function buildFollowUpMessage(step, name, symptomText, hn, childKey) {
   const periods = {
     1: "ใน 30 นาทีที่ผ่านมา",
-    2: "ใน 6 ชั่วโมงที่ผ่านมา",
-    3: "ใน 24 ชั่วโมงที่ผ่านมา",
-    4: "ใน 3 วันที่ผ่านมา",
-    5: "ใน 1 สัปดาห์ที่ผ่านมา",
+    2: "ใน 3 วันที่ผ่านมา",
+    3: "ใน 1 สัปดาห์ที่ผ่านมา",
   };
   const period = periods[step] || `รอบที่ ${step}`;
   return {
